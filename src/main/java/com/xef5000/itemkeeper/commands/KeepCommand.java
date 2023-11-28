@@ -1,7 +1,5 @@
 package com.xef5000.itemkeeper.commands;
 
-import com.cryptomorin.xseries.XItemStack;
-import com.cryptomorin.xseries.XMaterial;
 import com.xef5000.itemkeeper.utils.KeepUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,11 +27,11 @@ public class KeepCommand implements CommandExecutor {
         Player player = (Player) commandSender;
         ItemStack itemStack = player.getItemInHand();
 
-        XMaterial material = XMaterial.matchXMaterial(itemStack);
-        Map<String, Object> newstack = XItemStack.serialize(player.getItemInHand());
+        //XMaterial material = XMaterial.matchXMaterial(itemStack);
+        //Map<String, Object> newstack = XItemStack.serialize(player.getItemInHand());
 
-        System.out.println("Newstack: "+newstack);
-        System.out.println("Newstackitem: " +XItemStack.deserialize(newstack));
+        //System.out.println("Newstack: "+newstack);
+        //System.out.println("Newstackitem: " +XItemStack.deserialize(newstack));
         System.out.println("comparison with old: "+itemStack);
 
 
