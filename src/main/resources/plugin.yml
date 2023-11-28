@@ -3,6 +3,7 @@ version: '${project.version}'
 main: com.xef5000.itemkeeper.ItemKeeper
 description: Keep specific items on death and restore them on respawn
 author: xef5000
+api-version: "1.13"
 
 commands:
   keep:
