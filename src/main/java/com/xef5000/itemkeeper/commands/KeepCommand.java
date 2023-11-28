@@ -7,8 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Map;
-
 public class KeepCommand implements CommandExecutor {
 
 
@@ -26,13 +24,6 @@ public class KeepCommand implements CommandExecutor {
 
         Player player = (Player) commandSender;
         ItemStack itemStack = player.getItemInHand();
-
-        //XMaterial material = XMaterial.matchXMaterial(itemStack);
-        //Map<String, Object> newstack = XItemStack.serialize(player.getItemInHand());
-
-        //System.out.println("Newstack: "+newstack);
-        //System.out.println("Newstackitem: " +XItemStack.deserialize(newstack));
-        System.out.println("comparison with old: "+itemStack);
 
 
         ItemStack newItem;
