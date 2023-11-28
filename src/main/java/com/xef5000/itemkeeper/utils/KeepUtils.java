@@ -1,52 +1,33 @@
 package com.xef5000.itemkeeper.utils;
 
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import de.tr7zw.changeme.nbtapi.NBT;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import org.bukkit.inventory.ItemStack;
 
 public class KeepUtils {
 
-    public static ItemStack makeItemKeepable(ItemStack itemStack) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(itemStack);
-        NBTTagCompound tagCompound = nmsItem.getTag();
-
-        if (tagCompound == null) {
-            tagCompound = new NBTTagCompound();
+    public static ItemStack makeItemKeepable(ItemStack itemStack, boolean value) {
+        if (value) {
+            NBT.modify(itemStack, nbt -> {
+                nbt.setBoolean("keep", value);
+            });
+        } else {
+            NBT.modify(itemStack, nbt -> {
+                nbt.removeKey("keep");
+            });
         }
-
-        // Add your custom tag
-        tagCompound.setBoolean("itemkeeper_keep", true);
-
-        // Set the modified tag back to the item
-        nmsItem.setTag(tagCompound);
-
-        return CraftItemStack.asBukkitCopy(nmsItem);
-    }
-
-    public static ItemStack makeItemNotKeepable(ItemStack itemStack) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(itemStack);
-        NBTTagCompound tagCompound = nmsItem.getTag();
-
-        if (tagCompound == null) {
-            tagCompound = new NBTTagCompound();
-        }
-
-        // Add your custom tag
-        tagCompound.setBoolean("itemkeeper_keep", false);
-
-        // Set the modified tag back to the item
-        nmsItem.setTag(tagCompound);
-
-        return CraftItemStack.asBukkitCopy(nmsItem);
+        return itemStack;
     }
 
     public static boolean isItemKeepable(ItemStack itemStack) {
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(itemStack);
-        NBTTagCompound tagCompound = nmsItem.getTag();
+        ReadWriteNBT nbt = NBT.itemStackToNBT(itemStack);
+        System.out.println("NBT C "+nbt);
+        ReadWriteNBT tags = nbt.getCompound("tag");
+        if (tags != null) {
+            return tags.hasTag("keep");
+        } else {
+            return nbt.hasTag("keep");
+        }
 
-        if (tagCompound == null)
-            return false;
-
-        return tagCompound.getBoolean("itemkeeper_keep");
     }
 }

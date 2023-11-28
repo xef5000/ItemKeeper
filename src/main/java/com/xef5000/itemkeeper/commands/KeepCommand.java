@@ -28,10 +28,10 @@ public class KeepCommand implements CommandExecutor {
 
         ItemStack newItem;
         if (KeepUtils.isItemKeepable(itemStack)) {
-            newItem = KeepUtils.makeItemNotKeepable(itemStack);
+            newItem = KeepUtils.makeItemKeepable(itemStack, false);
             player.sendMessage("§cYour Item will no longer kept with you at all times!");
         } else {
-            newItem = KeepUtils.makeItemKeepable(itemStack);
+            newItem = KeepUtils.makeItemKeepable(itemStack, true);
             player.sendMessage("§aYour Item will now kept with you at all times!");
         }
 
