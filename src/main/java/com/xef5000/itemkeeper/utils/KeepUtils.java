@@ -21,7 +21,6 @@ public class KeepUtils {
 
     public static boolean isItemKeepable(ItemStack itemStack) {
         ReadWriteNBT nbt = NBT.itemStackToNBT(itemStack);
-        System.out.println("NBT C "+nbt);
         ReadWriteNBT tags = nbt.getCompound("tag");
         if (tags != null) {
             return tags.hasTag("keep");
