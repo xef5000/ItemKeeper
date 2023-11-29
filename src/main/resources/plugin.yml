@@ -1,5 +1,5 @@
 name: ItemKeeper
-version: '${project.version}'
+version: '1.1'
 main: com.xef5000.itemkeeper.ItemKeeper
 description: Keep specific items on death and restore them on respawn
 author: xef5000
