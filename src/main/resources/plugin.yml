@@ -10,3 +10,7 @@ commands:
     description: Keep specific items on death
     usage: /keep
     permission: itemkeeper.keep
+  itemkeeper:
+    description: Reload the configuration file
+    usage: /itemkeeper reload
+    permission: itemkeeper.reload

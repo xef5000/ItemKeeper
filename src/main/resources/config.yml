@@ -1,0 +1,6 @@
+messages:
+  itemKeepable: "&aYour Item will now be kept with you at all times!"
+  itemNotKeepable: "&cYour Item will no longer be kept with you at all times!"
+  playerOnly: "&cYou must be a player to run this command!"
+  permissionDenied: "&cYou don't have permission to use this command!"
+  reload: "&aThe config has been reloaded"
