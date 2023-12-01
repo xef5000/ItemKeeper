@@ -4,3 +4,11 @@ messages:
   playerOnly: "&cYou must be a player to run this command!"
   permissionDenied: "&cYou don't have permission to use this command!"
   reload: "&aThe config has been reloaded"
+
+item:
+  name-suffix: false
+  suffix-on: " &8[&aON&8]&r"
+  suffix-off: " &8[&cOFF&8]&r"
+  name-prefix: false
+  prefix-on: "&8[&aON&8]&r "
+  prefix-off: "&r"
