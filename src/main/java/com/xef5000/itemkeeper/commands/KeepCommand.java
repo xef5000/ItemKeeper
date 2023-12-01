@@ -19,31 +19,54 @@ public class KeepCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        if (!(commandSender instanceof Player)) {
-            commandSender.sendMessage(plugin.getConfig().getString("messages.playerOnly").replace("&", "§"));
-            return false;
-        }
 
         if (!(commandSender.hasPermission("itemkeeper.keep"))) {
             commandSender.sendMessage(plugin.getConfig().getString("messages.permissionDenied").replace("&", "§"));
             return false;
         }
 
-        Player player = (Player) commandSender;
-        ItemStack itemStack = player.getItemInHand();
+        if (strings.length > 0) {
+            // If username is provided, target the specified player
+            Player targetPlayer = plugin.getServer().getPlayer(strings[0]);
+            if (targetPlayer == null || !targetPlayer.isOnline()) {
+                commandSender.sendMessage(plugin.getConfig().getString("messages.playerNotFound").replace("&", "§"));
+                return false;
+            }
 
-        ItemStack newItem;
-        if (KeepUtils.isItemKeepable(itemStack)) {
-            newItem = KeepUtils.makeItemKeepable(itemStack, false);
-            player.sendMessage(plugin.getConfig().getString("messages.itemNotKeepable").replace("&", "§"));
+            ItemStack itemStack = targetPlayer.getItemInHand();
+            ItemStack newItem;
+
+            if (KeepUtils.isItemKeepable(itemStack)) {
+                newItem = KeepUtils.makeItemKeepable(itemStack, false);
+                targetPlayer.sendMessage(plugin.getConfig().getString("messages.itemNotKeepable").replace("&", "§"));
+            } else {
+                newItem = KeepUtils.makeItemKeepable(itemStack, true);
+                targetPlayer.sendMessage(plugin.getConfig().getString("messages.itemKeepable").replace("&", "§"));
+            }
+
+            targetPlayer.setItemInHand(newItem);
+            return true;
+        } else if (commandSender instanceof Player) {
+            // If no username provided, use the command sender's player
+            Player player = (Player) commandSender;
+            ItemStack itemStack = player.getItemInHand();
+            ItemStack newItem;
+
+            if (KeepUtils.isItemKeepable(itemStack)) {
+                newItem = KeepUtils.makeItemKeepable(itemStack, false);
+                player.sendMessage(plugin.getConfig().getString("messages.itemNotKeepable").replace("&", "§"));
+            } else {
+                newItem = KeepUtils.makeItemKeepable(itemStack, true);
+                player.sendMessage(plugin.getConfig().getString("messages.itemKeepable").replace("&", "§"));
+            }
+
+            player.setItemInHand(newItem);
+            return true;
         } else {
-            newItem = KeepUtils.makeItemKeepable(itemStack, true);
-            player.sendMessage(plugin.getConfig().getString("messages.itemKeepable").replace("&", "§"));
+            // If no username provided and not a player, show error message
+            commandSender.sendMessage(plugin.getConfig().getString("messages.playerOnly").replace("&", "§"));
+            return false;
         }
-
-        player.setItemInHand(newItem);
-
-        return true;
     }
 
 

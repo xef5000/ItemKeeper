@@ -4,6 +4,7 @@ messages:
   playerOnly: "&cYou must be a player to run this command!"
   permissionDenied: "&cYou don't have permission to use this command!"
   reload: "&aThe config has been reloaded"
+  playerNotFound: "&cThis player was not found!"
 
 item:
   name-suffix: false
