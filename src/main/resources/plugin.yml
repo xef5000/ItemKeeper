@@ -1,5 +1,5 @@
 name: ItemKeeper
-version: '1.1.1'
+version: '1.2'
 main: com.xef5000.itemkeeper.ItemKeeper
 description: Keep specific items on death and restore them on respawn
 author: xef5000
@@ -8,7 +8,7 @@ api-version: "1.13"
 commands:
   keep:
     description: Keep specific items on death
-    usage: /keep
+    usage: /keep [player]
     permission: itemkeeper.keep
   itemkeeper:
     description: Reload the configuration file
