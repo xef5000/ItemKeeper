@@ -12,3 +12,6 @@ item:
   name-prefix: false
   prefix-on: "&8[&aON&8]&r "
   prefix-off: "&r"
+  lore: true
+  lore-on: "&7This item is permanent"
+  lore-off: "&cThis is off"
