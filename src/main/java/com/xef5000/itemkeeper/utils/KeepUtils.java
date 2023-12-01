@@ -87,24 +87,58 @@ public class KeepUtils {
         ItemMeta meta = itemStack.getItemMeta();
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
+        String newLastLore = "";
+        String lastLore = getLastLoreNBT(itemStack);
+
         String loreStringOn = plugin.getConfig().getString("item.lore-on").replace("&", "§");
         String loreStringOff = plugin.getConfig().getString("item.lore-off").replace("&", "§");
+
+        if (lastLore != null && !lore.isEmpty()) {
+            lore.remove(lastLore);
+        }
 
         if (value) { // When toggling to "ON"
             if (!lore.isEmpty() && lore.get(0).equals(loreStringOff)) {
                 lore.remove(0);
             }
-            lore.add(0, loreStringOn);
+            if (!loreStringOn.isEmpty()) {
+                lore.add(0, loreStringOn);
+                newLastLore = loreStringOn;
+            }
         } else { // When toggling to "OFF"
             if (!lore.isEmpty() && lore.get(0).equals(loreStringOn)) {
                 lore.remove(0);
             }
-            lore.add(0, loreStringOff);
+            if (!loreStringOff.isEmpty()) {
+                lore.add(0, loreStringOff);
+                newLastLore = loreStringOff;
+            }
         }
 
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
-        return itemStack;
+        return setLastLoreNBT(itemStack, newLastLore);
+    }
+
+    private static ItemStack setLastLoreNBT(ItemStack itemStack, String lastLore) {
+        ItemStack newStack = itemStack.clone();
+        NBT.modify(newStack, nbt -> {
+            nbt.setString("itemkeeper_lastLore", lastLore);
+        });
+        return newStack;
+    }
+
+    private static String getLastLoreNBT(ItemStack itemStack) {
+        ReadWriteNBT nbt = NBT.itemStackToNBT(itemStack);
+        ReadWriteNBT tags = nbt.getCompound("tag");
+        if (tags != null) {
+            if (tags.hasTag("itemkeeper_lastLore"))
+                return tags.getString("itemkeeper_lastLore");
+        } else {
+            if (nbt.hasTag("itemkeeper_lastLore"))
+                return nbt.getString("itemkeeper_lastLore");
+        }
+        return null;
     }
 
     public static boolean isItemKeepable(ItemStack itemStack) {
